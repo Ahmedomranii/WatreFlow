@@ -40,7 +40,7 @@ Livraisons::Livraisons(QWidget *parent) : QWidget(parent), ui(new Ui::Livraisons
         for (const QString &texte : rows[r])
             ligne << new QStandardItem(texte);
         ligne.last()->setForeground(couleurs[r]);   // couleur du statut
-        ligne.last()->setData(Qt::FontRole, QFont("Segoe UI", 9, QFont::DemiBold));
+        ligne.last()->setFont(QFont("Segoe UI", 9, QFont::DemiBold));
         model->appendRow(ligne);
     }
     ui->tableView->setModel(model);
