@@ -3,3 +3,9 @@ build/
 *.pro.user
 *.zip
 *.exe
+
+build-*/
+cmake-build-*/
+.qtc_clangd/
+CMakeLists.txt.user
+*.rar

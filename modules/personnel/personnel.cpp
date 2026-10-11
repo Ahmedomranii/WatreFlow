@@ -42,18 +42,6 @@ static QString dataFile() { return QStandardPaths::writableLocation(QStandardPat
 
 Personnel::Personnel(QWidget *parent):QWidget(parent),ui(new Ui::Personnel){
     ui->setupUi(this);
-    ui->labelLogo->setText("◈  WaterFlow");
-    ui->menuLateral->setCurrentRow(1);
-    ui->menuLateral->setFocusPolicy(Qt::NoFocus);
-    const QList<QStyle::StandardPixmap> menuIcons = {
-        QStyle::SP_ComputerIcon, QStyle::SP_DirHomeIcon, QStyle::SP_DriveHDIcon,
-        QStyle::SP_FileDialogDetailedView, QStyle::SP_ArrowRight, QStyle::SP_DialogOpenButton,
-        QStyle::SP_FileDialogInfoView, QStyle::SP_MessageBoxWarning
-    };
-    for (int i=0; i<ui->menuLateral->count() && i<menuIcons.size(); ++i) {
-        ui->menuLateral->item(i)->setIcon(QApplication::style()->standardIcon(menuIcons[i]));
-        ui->menuLateral->item(i)->setSizeHint(QSize(0,44));
-    }
     ui->btnAjouter->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogNewFolder));
     ui->btnEnregistrer->setIcon(QApplication::style()->standardIcon(QStyle::SP_DialogSaveButton));
     ui->btnSupprimer->setIcon(QApplication::style()->standardIcon(QStyle::SP_TrashIcon));
@@ -66,7 +54,6 @@ Personnel::Personnel(QWidget *parent):QWidget(parent),ui(new Ui::Personnel){
     connect(ui->comboDepartement,QOverload<int>::of(&QComboBox::currentIndexChanged),this,&Personnel::rechercher);
     connect(ui->comboTri,QOverload<int>::of(&QComboBox::currentIndexChanged),this,&Personnel::rechercher);
     connect(ui->btnExporter,&QPushButton::clicked,this,&Personnel::exporterAttestation);
-    connect(ui->menuLateral,&QListWidget::currentRowChanged,this,&Personnel::menuClique);
     chargerDonnees(); rafraichirTable(); rafraichirPlanning(); rafraichirGraphique(); viderFormulaire();
 }
 Personnel::~Personnel(){delete ui;}
@@ -235,6 +222,3 @@ void Personnel::exporterAttestation(){
     box.exec();
     if(box.clickedButton()==ouvrir) QDesktopServices::openUrl(QUrl::fromLocalFile(chemin));
 }
-
-void Personnel::menuClique(int row){if(row==1)return;QStringList names={"Tableau de bord","Personnel","Équipements","Production & stocks","Commandes","Livraisons","Statistiques","Alertes"};QMessageBox::information(this,names.value(row),"Cette section est prête pour être reliée à son module.\nLa gestion du personnel reste accessible via Personnel.");ui->menuLateral->setCurrentRow(1);}
-void Personnel::deconnecter(){close();}

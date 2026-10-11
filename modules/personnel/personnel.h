@@ -24,8 +24,6 @@ private slots:
     void selectionEmploye(int row);
     void rechercher();
     void exporterAttestation();
-    void menuClique(int row);
-    void deconnecter();
 
 private:
     void chargerDonnees();
