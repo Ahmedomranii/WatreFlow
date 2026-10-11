@@ -23,7 +23,7 @@ private slots:
     void supprimerEmploye();
     void selectionEmploye(int row);
     void rechercher();
-    void gestionCongesAbsences();
+    void exporterAttestation();
     void menuClique(int row);
     void deconnecter();
 
@@ -36,6 +36,8 @@ private:
     void remplirFormulaire(int row);
     void viderFormulaire();
     QString prochainId() const;
+    int indexSelectionne() const;
+    QString htmlAttestation(const Employe &e, const QString &reference) const;
     QList<Employe> m_employes;
     int m_editingIndex = -1;
     Ui::Personnel *ui;
