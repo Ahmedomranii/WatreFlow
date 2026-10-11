@@ -24,14 +24,20 @@ void BarChart::paintEvent(QPaintEvent *)
 
     const int gauche = 30, haut = 20, droite = 6, bas = 22;
     const QRect zone(gauche, haut, width() - gauche - droite, height() - haut - bas);
-    const int maxi = 25;
+    // Échelle adaptée aux valeurs (au moins 0-25, puis s'agrandit avec l'effectif)
+    int valeurMax = 0;
+    for (int v : m_valeurs)
+        valeurMax = qMax(valeurMax, v);
+    int maxi = qMax(25, ((valeurMax + 4) / 5) * 5);
+    const int pas = (maxi <= 25) ? 5 : (((maxi / 5) + 4) / 5) * 5;
+    maxi = ((maxi + pas - 1) / pas) * pas;
 
     QFont police = font();
     police.setPointSize(8);
     p.setFont(police);
 
     // Lignes de repère et graduations (0, 5, 10 ... 25)
-    for (int v = 0; v <= maxi; v += 5) {
+    for (int v = 0; v <= maxi; v += pas) {
         const int y = zone.bottom() - zone.height() * v / maxi;
         p.setPen(QColor("#E3EDF3"));
         p.drawLine(zone.left(), y, zone.right(), y);
